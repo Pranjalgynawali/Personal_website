@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Pranjal Gyawali YouTube video gallery.">
+  <title>Gallery | Pranjal Gyawali</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="live-bg" aria-hidden="true">
+    <div class="film-grain"></div>
+    <div class="cinematic-spotlight"></div>
+    <canvas id="live-canvas"></canvas>
+  </div>
+
+  <div class="top-utility-bar">
+    <div class="top-bar-inner">
+      <div class="top-links">
+        <a href="index.html#top">HOME</a>
+        <a href="index.html#about">ABOUT ME</a>
+        <a href="index.html#nepal">EXPLORE NEPAL</a>
+      </div>
+      <div class="top-socials">
+        <a href="https://www.youtube.com/@pranjalgyawali/videos" target="_blank" rel="noopener noreferrer">WATCH MY VIDEOS</a>
+      </div>
+    </div>
+  </div>
+
+  <nav class="sub-nav-bar" id="nav-bar">
+    <div class="sub-nav-inner">
+      <button class="menu-toggle-sub" aria-label="Open navigation" aria-expanded="false">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+      <div class="sub-nav-links">
+        <a href="index.html#top">HOME</a>
+        <a href="index.html#about">ABOUT ME</a>
+        <a href="index.html#nepal">EXPLORE NEPAL</a>
+        <a href="index.html#creator">CREATOR</a>
+        <a href="index.html#highlights">HIGHLIGHTS</a>
+        <a href="gallery.html" class="active">GALLERY</a>
+        <a href="index.html#connect">CONTACT</a>
+      </div>
+      <div class="sub-nav-actions">
+        <a class="nav-youtube-btn" href="https://www.youtube.com/@pranjalgyawali/videos" target="_blank" rel="noopener noreferrer">▶ YouTube</a>
+      </div>
+    </div>
+  </nav>
+
+  <main>
+    <section class="gallery-section section-shell" id="gallery">
+      <div class="section-heading reveal">
+        <div>
+          <p class="section-number">01 / Gallery</p>
+          <h1>Latest videos from<br><em>the channel.</em></h1>
+        </div>
+        <p class="section-note">Click any thumbnail to watch the full video on YouTube.</p>
+      </div>
+      <div class="gallery-grid" id="youtube-gallery-grid"></div>
+    </section>
+  </main>
+
+  <footer class="site-footer section-shell">
+    <span>© <span id="year"></span> Pranjal Gyawali</span>
+    <a href="index.html#top">Back to home ↑</a>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
