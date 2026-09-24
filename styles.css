@@ -2146,3 +2146,328 @@ a {
   }
 
 }
+/* MOBILE LAYOUT AND CONTENT VISIBILITY */
+@media (max-width: 800px) {
+  html {
+    scroll-padding-top: 68px;
+  }
+
+  body {
+    overflow-x: hidden;
+  }
+
+  img,
+  video {
+    max-width: 100%;
+  }
+
+  .section-shell {
+    width: min(1180px, calc(100% - 32px));
+  }
+
+  .intro-band,
+  .creator-section,
+  .nepal-section,
+  .journey-section,
+  .connect-band {
+    padding-top: 76px;
+    padding-bottom: 76px;
+  }
+
+  .panoramic-hero {
+    height: clamp(520px, 78svh, 700px);
+    min-height: 520px;
+  }
+
+  .hero-brand-center {
+    width: 100%;
+    padding: 20px 16px;
+  }
+
+  .hero-brand-name {
+    max-width: 100%;
+    font-size: clamp(34px, 9vw, 64px);
+    letter-spacing: clamp(2px, 1vw, 6px);
+    overflow-wrap: anywhere;
+  }
+
+  .hero-brand-tagline {
+    font-size: clamp(21px, 5vw, 32px);
+  }
+
+  .hero-traveler-badge {
+    max-width: 100%;
+    padding: 8px 14px;
+    font-size: 9px;
+    letter-spacing: 1.5px;
+  }
+
+  .sub-nav-inner {
+    width: calc(100% - 28px);
+    gap: 12px;
+  }
+
+  .sub-nav-actions {
+    margin-left: auto;
+  }
+
+  .nav-youtube-btn {
+    padding: 8px 10px;
+    font-size: 10px;
+    letter-spacing: 0.4px;
+  }
+
+  .two-column,
+  .journey-layout,
+  .connect-layout,
+  .gear-stage {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 28px;
+  }
+
+  .two-column > *,
+  .journey-layout > *,
+  .connect-layout > *,
+  .gear-stage > * {
+    min-width: 0;
+  }
+
+  .hero-art {
+    width: 100%;
+    height: clamp(260px, 75vw, 420px);
+  }
+
+  .about-copy h2,
+  .section-heading h2,
+  .journey-title h2 {
+    font-size: clamp(34px, 9vw, 54px);
+    margin-bottom: 20px;
+  }
+
+  .section-heading {
+    gap: 18px;
+    margin-bottom: 32px;
+  }
+
+  .section-note {
+    width: 100%;
+    max-width: none;
+    align-self: auto;
+  }
+
+  .about-copy p,
+  .journey-text {
+    font-size: 17px;
+  }
+
+  .creator-card {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .creator-content {
+    gap: 22px;
+    padding: 28px 24px;
+  }
+
+  .creator-content h3 {
+    font-size: clamp(30px, 8vw, 38px);
+    overflow-wrap: anywhere;
+  }
+
+  .creator-side {
+    min-height: 0;
+    gap: 24px;
+    padding: 26px 24px;
+  }
+
+  .highlight-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .nepal-links {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .nepal-link {
+    grid-template-columns: 34px minmax(0, 1fr) auto;
+    gap: 10px;
+    padding: 14px 8px;
+  }
+
+  .nepal-link-name {
+    font-size: 18px;
+    overflow-wrap: anywhere;
+  }
+
+  .gear-story {
+    padding: 76px 0 64px;
+  }
+
+  .gear-stage {
+    margin-top: 28px;
+    gap: 24px;
+  }
+
+  .gear-visual {
+    position: relative;
+    top: auto;
+    min-height: 0;
+    padding: 12px;
+    overflow: visible;
+  }
+
+  .gear-scene {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px;
+    height: auto;
+    min-height: 0;
+    transform-style: flat;
+  }
+
+  .gear-device,
+  .gear-device.is-active {
+    position: relative;
+    inset: auto;
+    display: grid;
+    width: 100%;
+    opacity: 1;
+    transform: none !important;
+    transform-style: flat;
+  }
+
+  .gear-image,
+  .gear-laptop .gear-image,
+  .gear-light .gear-image,
+  .gear-tripod .gear-image {
+    width: 100%;
+    max-width: 100%;
+    height: clamp(112px, 34vw, 190px);
+    padding: 7px;
+    border-radius: 14px;
+    object-fit: contain;
+  }
+
+  .gear-details {
+    gap: 16px;
+  }
+
+  .gear-panel,
+  .gear-panel.visible {
+    padding: 22px 20px;
+    opacity: 1;
+    transform: none;
+  }
+
+  .gear-panel p {
+    font-size: 16px;
+    overflow-wrap: anywhere;
+  }
+
+  .connect-copy h2 {
+    font-size: clamp(42px, 11vw, 64px);
+  }
+
+  .connect-note {
+    padding: 28px 22px;
+  }
+
+  .connect-note p {
+    font-size: clamp(25px, 7vw, 32px);
+  }
+
+  .contact-card {
+    padding: 18px 16px;
+  }
+
+  .contact-list li {
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    gap: 6px 14px;
+  }
+
+  .contact-list strong,
+  .contact-list a {
+    min-width: 0;
+    text-align: left;
+    overflow-wrap: anywhere;
+  }
+
+  .gallery-section {
+    padding: 76px 0 56px;
+  }
+
+  /* Keep content available if scroll-reveal JavaScript is delayed or unavailable. */
+  .reveal,
+  .reveal.visible {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@media (max-width: 500px) {
+  .section-shell {
+    width: calc(100% - 28px);
+  }
+
+  .top-bar-inner {
+    width: calc(100% - 28px);
+  }
+
+  .panoramic-hero {
+    height: 560px;
+    min-height: 500px;
+  }
+
+  .sky-banner {
+    max-width: 58vw;
+    overflow: hidden;
+    font-size: 9px;
+    letter-spacing: 0.5px;
+  }
+
+  .plane-towline {
+    width: 18px;
+  }
+
+  .prop-plane {
+    width: 72px;
+  }
+
+  .button {
+    max-width: 100%;
+    gap: 12px;
+    padding: 13px 16px;
+  }
+
+  .creator-badge {
+    max-width: 100%;
+    font-size: 9px;
+    letter-spacing: 1px;
+  }
+
+  .gear-scene {
+    gap: 8px;
+  }
+
+  .gear-visual {
+    padding: 8px;
+    border-radius: 18px;
+  }
+
+  .gear-image,
+  .gear-laptop .gear-image,
+  .gear-light .gear-image,
+  .gear-tripod .gear-image {
+    height: clamp(100px, 32vw, 150px);
+    padding: 5px;
+  }
+
+  .contact-list span {
+    font-size: 11px;
+  }
+
+  .site-footer {
+    gap: 10px;
+  }
+}
