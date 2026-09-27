@@ -1,6 +1,7 @@
 const http = require('node:http');
 const fs = require('node:fs');
 const path = require('node:path');
+const { fetchYouTubeVideos } = require('./youtube-feed');
 
 const root = __dirname;
 const port = Number(process.env.PORT) || 3000;
@@ -14,6 +15,21 @@ const mimeTypes = {
   '.webp': 'image/webp',
   '.mp4': 'video/mp4',
 };
+
+async function handleYouTubeVideos(req, res) {
+  try {
+    const videos = await fetchYouTubeVideos();
+    res.writeHead(200, {
+      'Content-Type': 'application/json; charset=utf-8',
+      'Cache-Control': 'public, max-age=300',
+    });
+    res.end(JSON.stringify(videos));
+  } catch (error) {
+    console.error('Unable to load YouTube videos:', error);
+    res.writeHead(502, { 'Content-Type': 'application/json; charset=utf-8' });
+    res.end(JSON.stringify({ error: 'Unable to load YouTube videos' }));
+  }
+}
 
 function resolveRequestPath(urlPath) {
   let pathname;
@@ -31,6 +47,11 @@ function resolveRequestPath(urlPath) {
 }
 
 const server = http.createServer((req, res) => {
+  if (req.url === '/api/youtube-videos') {
+    handleYouTubeVideos(req, res);
+    return;
+  }
+
   const filePath = resolveRequestPath(req.url || '/');
   if (!filePath) {
     res.writeHead(400, { 'Content-Type': 'text/plain; charset=utf-8' });

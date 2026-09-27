@@ -78,66 +78,64 @@ const revealElements =
 const youtubeGalleryGrid = document.getElementById("youtube-gallery-grid");
 
 if (youtubeGalleryGrid) {
-  const youtubeVideoIds = [
+  const fallbackVideos = [
     { id: "WrFw1UA8f7s", title: "आफन्तको खोजीमा हिँडेको मान्छे म" },
     { id: "_9WOGxBFYbs", title: "Picnic Vlog 2082 II PPNEPAL" },
-    { id: "PtbQ8zpsSlg", title: "हरिबोधनी एकादशी २०८२ कर्णाली नदीमा स्नान कार्यक्रम सम्पन्न" },
-    { id: "0TtcBl6oJ8w", title: "Bratabandha Ceremony | Pranjal, Prajwol and Anjan" },
-    { id: "XBjN-nNya6c", title: "Dakshinkali Temple Vlog | The Ancient Story" },
-    { id: "sRRLAjzaFOs", title: "Sali Nadi Mela 2025 New Video" },
-    { id: "JjcNJJRmTBE", title: "Picnic Vlog 2081 Barmelitol | Bardiya, Nepal" },
-    { id: "MH3StJyfeIg", title: "Nainatal Vlog 2081 | Nepal to India" },
-    { id: "2yCRS5tMGGo", title: "Dashain 2081" },
-    { id: "vvSHX_-dMP0", title: "Welcome Programme Liverpool College" },
+    { id: "PtbQ8zpsSlg", title: "हरिबोधनी एकादशी २०८२ कर्णाली नदीमा स्नान कार्यक्रम सम्पन्न | PPNEPAL" },
+    { id: "0TtcBl6oJ8w", title: "BRATABANDHA CEREMONY | PRANJAL, PRAJWOL, AND ANJAN | PPNEPAL" },
+    { id: "XBjN-nNya6c", title: "Dakshinkali Temple Vlog | The ancient story of its origin | PPNEPAL" },
+    { id: "sRRLAjzaFOs", title: "Sali Nadi Mela 2025 New Video | PPNEPAL" },
+    { id: "JjcNJJRmTBE", title: "Picnic Vlog 2081 Barmelitol - Bardiya, Nepal | PPNEPAL" },
+    { id: "MH3StJyfeIg", title: "Nainatal Vlog 2081 Nepal To India | PPNEPAL" },
+    { id: "2yCRS5tMGGo", title: "Dashain 2081 | PPNEPAL" },
+    { id: "vvSHX_-dMP0", title: "Welcome Programme Liverpool collage" },
     { id: "xLJjFI6Dqsg", title: "Dharahara Vlog 2081" },
     { id: "_qw7xkyooY0", title: "Lucknow Vlog" },
-    { id: "MTxnK3D0FCo", title: "Farewell of Grade 12 | Liverpool International College" },
-    { id: "6TsXMzwKHik", title: "Holi 2080 | Huge Crowd at Basantapur" },
-    { id: "gzW1B7gg3ig", title: "2nd Milton Music and Food Fest" },
-    { id: "b52fgnTaUGI", title: "Panauti Hydropower Excursion Trip" },
-    { id: "N8K1Ey0FccE", title: "Rote Ping | Nepali Indigenous Swing" },
-    { id: "jNVbejXsopE", title: "Welcome Programme 2080 | Liverpool International College" },
-    { id: "X6r8R7k9l60", title: "Shivapuri Nagarjun National Park" },
-    { id: "7olYu3vY2DA", title: "Ghintang Song Group Dance" },
-    { id: "rThbX5hzu00", title: "Oi Maicha Song Dance" },
-    { id: "aAotF_b1Nh8", title: "Teachers Day Celebration 2080" },
-    { id: "WS5JAnP0fwQ", title: "Bardiya District Football Competition" },
-    { id: "eh1eWdQ1t6Y", title: "TAG Project Training Completed" },
-    { id: "mCjrE9RUq8A", title: "51st Anniversary of Shree Bhagawati School" },
-    { id: "zcXqT7O7fcU", title: "Aircraft Museum Opens in Nepalgunj" },
-    { id: "GsF1VpAP77Q", title: "Bardiya District League Final Game" },
-    { id: "6bprapzD-GI", title: "Public Holiday on the Occasion of Tamu Lhosar" },
-    { id: "V6xSriuLzNY", title: "Gaidakot Municipality Child Talent Visit" },
-    { id: "9RU248Vh6Xg", title: "Lions Club Bardiya Food Feeding Program" }
+    { id: "MTxnK3D0FCo", title: "Farewell of Grade 12 | Liverpool International College | PPNEPAL" },
+    { id: "6TsXMzwKHik", title: "Holi 2080 | Huge crowd at Basantapur | Kathmandu | Nepal" }
   ];
 
-  youtubeVideoIds.forEach((video, index) => {
-    const card = document.createElement("a");
-    card.className = "gallery-card reveal";
-    card.href = `https://www.youtube.com/watch?v=${video.id}`;
-    card.target = "_blank";
-    card.rel = "noopener noreferrer";
-    card.innerHTML = `
-      <div class="gallery-media">
-        <img src="https://i.ytimg.com/vi/${video.id}/hqdefault.jpg" alt="${video.title}" />
-      </div>
-      <div class="gallery-meta">
-        <span class="gallery-tag">Video</span>
-        <h3>${video.title}</h3>
-      </div>
-    `;
+  const renderVideos = (videos) => {
+    youtubeGalleryGrid.replaceChildren();
 
-    youtubeGalleryGrid.appendChild(card);
-  });
+    videos.forEach((video, index) => {
+      const card = document.createElement("a");
+      card.className = "gallery-card reveal";
+      card.href = `https://www.youtube.com/watch?v=${video.id}`;
+      card.target = "_blank";
+      card.rel = "noopener noreferrer";
+      card.innerHTML = `
+        <div class="gallery-media">
+          <img src="https://i.ytimg.com/vi/${video.id}/hqdefault.jpg" alt="${video.title}" />
+        </div>
+        <div class="gallery-meta">
+          <span class="gallery-tag">Video</span>
+          <h3>${video.title}</h3>
+        </div>
+      `;
 
-  const generatedCards = youtubeGalleryGrid.querySelectorAll(".gallery-card");
-  generatedCards.forEach((card, index) => {
-    if (index % 3 === 1) card.classList.add("reveal-delay");
-    if (index % 3 === 2) card.classList.add("reveal-delay-two");
-  });
+      if (index % 3 === 1) card.classList.add("reveal-delay");
+      if (index % 3 === 2) card.classList.add("reveal-delay-two");
+      youtubeGalleryGrid.appendChild(card);
+      observer.observe(card);
+    });
+  };
 
-  const cardsForObserver = youtubeGalleryGrid.querySelectorAll(".reveal");
-  cardsForObserver.forEach((element) => observer.observe(element));
+  renderVideos(fallbackVideos);
+  fetch(new URL("api/youtube-videos", window.location.href))
+    .then((response) => {
+      if (!response.ok) throw new Error("YouTube feed unavailable");
+      return response.json();
+    })
+    .then((videos) => {
+      if (!Array.isArray(videos) || videos.length === 0) {
+        throw new Error("YouTube feed returned no videos");
+      }
+      renderVideos(videos);
+    })
+    .catch(() => {
+      // Keep the last known videos visible if the feed is unavailable.
+    });
 }
 
 
@@ -168,7 +166,7 @@ if (gearPanels.length && gearDevices.length) {
         activateGear(entry.target.dataset.gear);
       }
     });
-  }, { threshold: 0.55 });
+  }, { threshold: window.matchMedia("(max-width: 800px)").matches ? 0.15 : 0.55 });
 
   gearPanels.forEach(panel => gearObserver.observe(panel));
 }
