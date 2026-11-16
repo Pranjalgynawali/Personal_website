@@ -146,6 +146,44 @@ revealElements.forEach(element => {
 });
 
 
+const contactForm = document.getElementById("contact-form");
+const contactStatus = document.getElementById("contact-status");
+
+if (contactForm && contactStatus) {
+  contactForm.addEventListener("submit", async (event) => {
+    event.preventDefault();
+
+    const submitButton = contactForm.querySelector("button[type='submit']");
+    const formData = new FormData(contactForm);
+    submitButton.disabled = true;
+    submitButton.textContent = "Sending...";
+    contactStatus.textContent = "";
+    contactStatus.removeAttribute("data-state");
+
+    try {
+      const response = await fetch(new URL("api/contact", window.location.href), {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(Object.fromEntries(formData)),
+      });
+      const result = await response.json();
+
+      if (!response.ok) throw new Error(result.error || "Unable to send your message.");
+
+      contactForm.reset();
+      contactStatus.textContent = "Thanks for reaching out. Your message has been sent.";
+      contactStatus.dataset.state = "success";
+    } catch (error) {
+      contactStatus.textContent = error.message || "Something went wrong. Please try again.";
+      contactStatus.dataset.state = "error";
+    } finally {
+      submitButton.disabled = false;
+      submitButton.textContent = "Send message";
+    }
+  });
+}
+
+
 /* =========================
    GEAR DEVICE ACTIVE STATE
 ========================= */

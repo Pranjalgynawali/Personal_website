@@ -557,92 +557,42 @@
       <div class="section-shell connect-layout">
 
         <div class="connect-copy reveal">
-
-          <p class="section-number">
-            05 / Connect
-          </p>
-
           <h2>
-            Let's connect..
-            <br>
-            <em>Let's share.</em>
+            Let's tell a story.
           </h2>
 
           <p>
-            Follow my work, watch my videos and stay
-            connected with the journey.
+            Have a place, journey, or story worth documenting? Reach out about travel videos, videography, and creative collaborations across Nepal. I'm also open to internship opportunities.
           </p>
 
-          <div class="contact-card">
-            <div class="contact-card-head">Contact</div>
-            <ul class="contact-list">
-              <li>
-                <span>Name</span>
-                <strong>Pranjal Gyawali</strong>
-              </li>
-              <li>
-                <span>Phone</span>
-                <a href="tel:+9779841355407">9841355407</a>
-              </li>
-              <li>
-                <span>Email</span>
-                <a href="mailto:gyawalipranjal231@gmail.com">gyawalipranjal231@gmail.com</a>
-              </li>
-            </ul>
-          </div>
-
-          <div class="social-buttons">
-
-            <a class="button button-light"
-               href="https://www.youtube.com/@pranjalgyawali"
-               target="_blank"
-               rel="noopener noreferrer">
-
-              YouTube
-              <span>↗</span>
-
-            </a>
-
-
-            <a class="button button-outline"
-               href="https://www.instagram.com/pranjal_gyawali/?hl=en"
-               target="_blank"
-               rel="noopener noreferrer">
-
-              Instagram
-              <span>↗</span>
-
-            </a>
-
-
-            <a class="button button-outline"
-               href="https://www.facebook.com/pranjal.gyawali"
-               target="_blank"
-               rel="noopener noreferrer">
-
-              Facebook
-              <span>↗</span>
-
-            </a>
-
-          </div>
+          <p class="contact-detail">
+            <strong>Email:</strong>
+            <a href="mailto:gyawalipranjal231@gmail.com">gyawalipranjal231@gmail.com</a>
+          </p>
+          <p class="contact-detail"><strong>Location:</strong> Nepal</p>
+          <p class="contact-detail"><strong>Availability:</strong> Travel / video / storytelling collaborations / internship</p>
 
         </div>
 
 
-        <div class="connect-note reveal reveal-delay">
+        <form class="contact-form reveal reveal-delay" id="contact-form">
+          <label class="visually-hidden" for="contact-name">Your name</label>
+          <input id="contact-name" name="name" type="text" placeholder="Your name" autocomplete="name" maxlength="100" required>
 
-          <p>
-            “Every place has a story.
-            Every person has a journey.
-            Keep exploring.”
-          </p>
+          <label class="visually-hidden" for="contact-email">Your email</label>
+          <input id="contact-email" name="email" type="email" placeholder="Your email" autocomplete="email" maxlength="254" required>
 
-          <span>
-            — Pranjal Gyawali
-          </span>
+          <label class="visually-hidden" for="contact-message">Tell me about your story or collaboration idea</label>
+          <textarea id="contact-message" name="message" placeholder="Tell me about your story or collaboration idea" rows="5" maxlength="5000" required></textarea>
 
-        </div>
+          <div class="contact-trap" aria-hidden="true">
+            <label for="contact-website">Leave this field empty</label>
+            <input id="contact-website" name="website" type="text" tabindex="-1" autocomplete="off">
+          </div>
+
+          <button class="contact-submit" type="submit">Send message</button>
+          <p class="contact-status" id="contact-status" role="status" aria-live="polite"></p>
+        </form>
 
       </div>
 
