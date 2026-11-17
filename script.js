@@ -75,7 +75,106 @@ const revealElements =
   document.querySelectorAll(".reveal");
 
 
+const certificateDialog = document.getElementById("certificate-dialog");
+
+if (certificateDialog) {
+  const certificateAlbums = {
+    badhaiyatal: ["Badhaiyatal 1.jpg", "Badhaiyatal 2.jpg", "Badhaiyatal 3.jpg"],
+    jagaruk: ["jagaruk 1.jpg"],
+    kalika: ["Kalika 1.jpg", "Kalika 2.jpg", "Kalika 3.jpg", "Kalika 4.jpg", "Kalika 5.jpg", "Kalika 6.jpg", "Kalika 7.jpg"],
+    mayur: ["Mayur yuba club 1.jpg", "Mayur yuba club 2.jpg", "Mayur yuba club 3.jpg"],
+    stan: ["stan 1.jpg", "stan 2.jpeg", "Stan 3.jpg", "stan 4.jpg", "stan 5.jpg"],
+    "shree-bhagawati-tech": [
+      "shree bhagawati san and gen sec school  1.jpg",
+      "shree bhagawati san and gen sec school  2.jpg",
+      "shree bhagawati san and gen sec school  3.jpg",
+    ],
+  };
+  const certificateImage = document.getElementById("certificate-dialog-image");
+  const certificateTitle = document.getElementById("certificate-dialog-title");
+  const certificateIssuer = document.getElementById("certificate-dialog-issuer");
+  const certificateDescription = document.getElementById("certificate-dialog-description");
+  const originalCertificate = document.getElementById("certificate-dialog-original");
+  const certificateAlbum = document.getElementById("certificate-album");
+  const certificateAlbumGrid = document.getElementById("certificate-album-grid");
+  const closeCertificateDialog = certificateDialog.querySelector(".certificate-dialog-close");
+
+  document.querySelector(".gallery-grid")?.addEventListener("click", (event) => {
+    const card = event.target.closest(".gallery-card");
+    const details = card?.querySelector(".certificate-details");
+    if (!card || !details) return;
+
+    event.preventDefault();
+    certificateImage.src = card.querySelector("img").src;
+    certificateImage.alt = card.querySelector("img").alt;
+    certificateTitle.textContent = card.querySelector("h3").textContent;
+    certificateIssuer.textContent = details.querySelector(".certificate-issuer").textContent;
+    certificateDescription.replaceChildren(...Array.from(details.querySelectorAll("p:not(.certificate-issuer)"), (paragraph) => paragraph.cloneNode(true)));
+    originalCertificate.href = card.href;
+    const album = certificateAlbums[card.dataset.album] || [];
+    certificateAlbumGrid.replaceChildren(...album.map((fileName, index) => {
+      const photoUrl = new URL(`public/certificate/Certificate%20photo/${encodeURIComponent(fileName)}`, window.location.href);
+      const link = document.createElement("a");
+      const image = document.createElement("img");
+      link.href = photoUrl.href;
+      link.target = "_blank";
+      link.rel = "noopener noreferrer";
+      link.setAttribute("aria-label", `Open ceremony photo ${index + 1}`);
+      image.src = photoUrl.href;
+      image.alt = `Ceremony photo ${index + 1}`;
+      image.loading = "lazy";
+      link.appendChild(image);
+      return link;
+    }));
+    certificateAlbum.hidden = album.length === 0;
+    certificateDialog.showModal();
+  });
+
+  closeCertificateDialog.addEventListener("click", () => certificateDialog.close());
+  certificateDialog.addEventListener("click", (event) => {
+    if (event.target === certificateDialog) certificateDialog.close();
+  });
+}
+
+
 const youtubeGalleryGrid = document.getElementById("youtube-gallery-grid");
+
+const openPhotoAlbum = document.getElementById("open-photo-album");
+const photoAlbumDialog = document.getElementById("photo-album-dialog");
+
+if (openPhotoAlbum && photoAlbumDialog) {
+  const photoFiles = [
+    "1.JPG", "2.jpg", "3.jpg", "4.jpg", "5.jpg", "6.jpg", "7.jpg", "8.jpg", "9.jpg",
+    "10.jpg", "11.jpg", "12.jpg", "13.jpg", "14.jpg", "15.jpg", "16.jpg", "17.jpg", "18.jpg", "19.jpg",
+    "20.jpg", "21.jpg", "22.jpg", "23.jpg", "24.jpg", "25.jpg", "26.jpg", "27.jpg", "28.jpg", "29.png",
+    "30.jpg", "31.jpg", "32.jpg", "33.jpg", "34.jpg", "35.jpg", "36.jpg", "37.jpg",
+  ];
+  const photoAlbumGrid = document.getElementById("photo-album-grid");
+
+  photoFiles.forEach((fileName, index) => {
+    const photoUrl = `public/Photos/${encodeURIComponent(fileName)}`;
+    const link = document.createElement("a");
+    const image = document.createElement("img");
+    link.href = photoUrl;
+    link.target = "_blank";
+    link.rel = "noopener noreferrer";
+    link.setAttribute("aria-label", `Open photo ${index + 1}`);
+    image.src = photoUrl;
+    image.alt = `Photo ${index + 1}`;
+    image.loading = "lazy";
+    link.appendChild(image);
+    photoAlbumGrid.appendChild(link);
+  });
+
+  openPhotoAlbum.addEventListener("click", () => {
+    photoAlbumDialog.showModal();
+  });
+
+  photoAlbumDialog.querySelector(".photo-album-close").addEventListener("click", () => photoAlbumDialog.close());
+  photoAlbumDialog.addEventListener("click", (event) => {
+    if (event.target === photoAlbumDialog) photoAlbumDialog.close();
+  });
+}
 
 if (youtubeGalleryGrid) {
   const fallbackVideos = [
@@ -90,9 +189,6 @@ if (youtubeGalleryGrid) {
     { id: "2yCRS5tMGGo", title: "Dashain 2081 | PPNEPAL" },
     { id: "vvSHX_-dMP0", title: "Welcome Programme Liverpool collage" },
     { id: "xLJjFI6Dqsg", title: "Dharahara Vlog 2081" },
-    { id: "_qw7xkyooY0", title: "Lucknow Vlog" },
-    { id: "MTxnK3D0FCo", title: "Farewell of Grade 12 | Liverpool International College | PPNEPAL" },
-    { id: "6TsXMzwKHik", title: "Holi 2080 | Huge crowd at Basantapur | Kathmandu | Nepal" }
   ];
 
   const renderVideos = (videos) => {
@@ -131,7 +227,8 @@ if (youtubeGalleryGrid) {
       if (!Array.isArray(videos) || videos.length === 0) {
         throw new Error("YouTube feed returned no videos");
       }
-      renderVideos(videos);
+      const dharaharaIndex = videos.findIndex((video) => /dharahara vlog/i.test(video.title));
+      if (dharaharaIndex >= 0) renderVideos(videos.slice(0, dharaharaIndex + 1));
     })
     .catch(() => {
       // Keep the last known videos visible if the feed is unavailable.

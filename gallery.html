@@ -51,16 +51,35 @@
   </nav>
 
   <main>
-    <section class="gallery-section section-shell" id="gallery">
+    <section class="gallery-section section-shell video-gallery" id="gallery">
       <div class="section-heading reveal">
         <div>
           <p class="section-number">01 / Gallery</p>
           <h1>Latest videos from<br><em>the channel.</em></h1>
         </div>
-        <p class="section-note">Click any thumbnail to watch the full video on YouTube.</p>
+        <div class="gallery-heading-aside">
+          <p class="section-note">Click any thumbnail to watch the full video on YouTube.</p>
+          <button class="photo-album-link" id="open-photo-album" type="button" aria-label="Open photo album, 37 photos">
+            <span class="photo-album-cover">
+              <img src="public/Photos/1.JPG" alt="">
+              <span class="photo-album-count">37</span>
+            </span>
+            <span class="photo-album-copy">
+              <strong>Photo album</strong>
+              <span>37 photos</span>
+            </span>
+          </button>
+        </div>
       </div>
       <div class="gallery-grid" id="youtube-gallery-grid"></div>
     </section>
+
+    <dialog class="photo-album-dialog" id="photo-album-dialog" aria-labelledby="photo-album-title">
+      <button class="photo-album-close" type="button" aria-label="Close photo album">&times;</button>
+      <h2 id="photo-album-title">Photo album</h2>
+      <p class="photo-album-total">37 photos</p>
+      <div class="photo-album-grid" id="photo-album-grid"></div>
+    </dialog>
   </main>
 
   <footer class="site-footer section-shell">
