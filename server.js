@@ -77,6 +77,7 @@ function resolveRequestPath(urlPath) {
 
   if (pathname === '/') pathname = '/index.html';
   if (pathname === '/gallery' || pathname === '/gallery/') pathname = '/gallery.html';
+  if (pathname === '/certificates' || pathname === '/certificates/') pathname = '/certificates.html';
 
   const filePath = path.resolve(root, `.${pathname}`);
   return filePath.startsWith(`${root}${path.sep}`) ? filePath : null;
