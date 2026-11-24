@@ -2,7 +2,6 @@ const http = require('node:http');
 const fs = require('node:fs');
 const path = require('node:path');
 const { fetchYouTubeVideos } = require('./youtube-feed');
-const { sendContactMessage } = require('./contact-email');
 
 const root = __dirname;
 const port = Number(process.env.PORT) || 3000;
@@ -32,41 +31,6 @@ async function handleYouTubeVideos(req, res) {
   }
 }
 
-async function handleContact(req, res) {
-  if (req.method !== 'POST') {
-    res.writeHead(405, { 'Content-Type': 'application/json; charset=utf-8', Allow: 'POST' });
-    res.end(JSON.stringify({ error: 'Method not allowed' }));
-    return;
-  }
-
-  let requestBody = '';
-  let tooLarge = false;
-  req.on('data', (chunk) => {
-    requestBody += chunk;
-    if (Buffer.byteLength(requestBody) > 10000) tooLarge = true;
-  });
-  req.on('end', async () => {
-    if (tooLarge) {
-      res.writeHead(413, { 'Content-Type': 'application/json; charset=utf-8' });
-      res.end(JSON.stringify({ error: 'Message is too large' }));
-      return;
-    }
-
-    let payload;
-    try {
-      payload = JSON.parse(requestBody);
-    } catch {
-      res.writeHead(400, { 'Content-Type': 'application/json; charset=utf-8' });
-      res.end(JSON.stringify({ error: 'Invalid JSON body' }));
-      return;
-    }
-
-    const result = await sendContactMessage(payload);
-    res.writeHead(result.status, { 'Content-Type': 'application/json; charset=utf-8' });
-    res.end(JSON.stringify(result.body));
-  });
-}
-
 function resolveRequestPath(urlPath) {
   let pathname;
   try {
@@ -86,11 +50,6 @@ function resolveRequestPath(urlPath) {
 const server = http.createServer((req, res) => {
   if (req.url === '/api/youtube-videos') {
     handleYouTubeVideos(req, res);
-    return;
-  }
-
-  if (new URL(req.url || '/', 'http://localhost').pathname === '/api/contact') {
-    handleContact(req, res);
     return;
   }
 

@@ -618,7 +618,8 @@
         </div>
 
 
-        <form class="contact-form reveal reveal-delay" id="contact-form">
+        <form class="contact-form reveal reveal-delay" id="contact-form" action="https://formspree.io/f/mrpqojke" method="POST">
+          <input type="hidden" name="_subject" value="New message from portfolio contact form">
           <label class="visually-hidden" for="contact-name">Your name</label>
           <input id="contact-name" name="name" type="text" placeholder="Your name" autocomplete="name" maxlength="100" required>
 
@@ -629,8 +630,8 @@
           <textarea id="contact-message" name="message" placeholder="Tell me about your story or collaboration idea" rows="5" maxlength="5000" required></textarea>
 
           <div class="contact-trap" aria-hidden="true">
-            <label for="contact-website">Leave this field empty</label>
-            <input id="contact-website" name="website" type="text" tabindex="-1" autocomplete="off">
+            <label for="contact-gotcha">Leave this field empty</label>
+            <input id="contact-gotcha" name="_gotcha" type="text" tabindex="-1" autocomplete="off">
           </div>
 
           <button class="contact-submit" type="submit">Send message</button>

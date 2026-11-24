@@ -247,35 +247,109 @@ const contactForm = document.getElementById("contact-form");
 const contactStatus = document.getElementById("contact-status");
 
 if (contactForm && contactStatus) {
+  let isSubmitting = false;
+  const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
   contactForm.addEventListener("submit", async (event) => {
     event.preventDefault();
 
+    if (isSubmitting) return;
+
+    const nameInput = contactForm.querySelector("input[name='name']");
+    const emailInput = contactForm.querySelector("input[name='email']");
+    const messageInput = contactForm.querySelector("textarea[name='message']");
+    const gotchaInput = contactForm.querySelector("input[name='_gotcha']");
     const submitButton = contactForm.querySelector("button[type='submit']");
-    const formData = new FormData(contactForm);
-    submitButton.disabled = true;
-    submitButton.textContent = "Sending...";
+
+    const name = nameInput ? nameInput.value.trim() : "";
+    const email = emailInput ? emailInput.value.trim() : "";
+    const message = messageInput ? messageInput.value.trim() : "";
+
+    // Validation
+    if (!name) {
+      contactStatus.textContent = "Please enter your name.";
+      contactStatus.dataset.state = "error";
+      if (nameInput) nameInput.focus();
+      return;
+    }
+
+    if (!email || !emailPattern.test(email)) {
+      contactStatus.textContent = "Please enter a valid email address.";
+      contactStatus.dataset.state = "error";
+      if (emailInput) emailInput.focus();
+      return;
+    }
+
+    if (!message) {
+      contactStatus.textContent = "Please enter your message.";
+      contactStatus.dataset.state = "error";
+      if (messageInput) messageInput.focus();
+      return;
+    }
+
+    // Honeypot check for spam protection
+    if (gotchaInput && gotchaInput.value.trim()) {
+      contactForm.reset();
+      contactStatus.textContent = "Your message has been sent successfully. I'll get back to you soon.";
+      contactStatus.dataset.state = "success";
+      return;
+    }
+
+    isSubmitting = true;
+    if (submitButton) {
+      submitButton.disabled = true;
+      submitButton.textContent = "Sending...";
+    }
     contactStatus.textContent = "";
     contactStatus.removeAttribute("data-state");
 
+    const submissionData = new FormData();
+    submissionData.append("name", name);
+    submissionData.append("email", email);
+    submissionData.append("message", message);
+    submissionData.append("_subject", `Website message from ${name}`);
+    submissionData.append("_replyto", email);
+    submissionData.append("_gotcha", "");
+
+    const endpoint = contactForm.getAttribute("action") || "https://formspree.io/f/mrpqojke";
+
     try {
-      const response = await fetch(new URL("api/contact", window.location.href), {
+      const response = await fetch(endpoint, {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(Object.fromEntries(formData)),
+        headers: {
+          Accept: "application/json",
+        },
+        body: submissionData,
       });
-      const result = await response.json();
 
-      if (!response.ok) throw new Error(result.error || "Unable to send your message.");
-
-      contactForm.reset();
-      contactStatus.textContent = "Thanks for reaching out. Your message has been sent.";
-      contactStatus.dataset.state = "success";
-    } catch (error) {
-      contactStatus.textContent = error.message || "Something went wrong. Please try again.";
+      if (response.ok) {
+        contactForm.reset();
+        contactStatus.textContent = "Your message has been sent successfully. I'll get back to you soon.";
+        contactStatus.dataset.state = "success";
+      } else {
+        let errorMessage = "Unable to send your message right now. Please try again.";
+        try {
+          const data = await response.json();
+          if (data && Array.isArray(data.errors) && data.errors.length > 0) {
+            errorMessage = data.errors.map((item) => item.message).join(", ");
+          } else if (data && typeof data.error === "string") {
+            errorMessage = data.error;
+          }
+        } catch {
+          // Keep default error message if JSON parsing fails
+        }
+        contactStatus.textContent = errorMessage;
+        contactStatus.dataset.state = "error";
+      }
+    } catch {
+      contactStatus.textContent = "Unable to send your message right now. Please check your internet connection and try again.";
       contactStatus.dataset.state = "error";
     } finally {
-      submitButton.disabled = false;
-      submitButton.textContent = "Send message";
+      isSubmitting = false;
+      if (submitButton) {
+        submitButton.disabled = false;
+        submitButton.textContent = "Send message";
+      }
     }
   });
 }
