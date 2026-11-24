@@ -515,3 +515,17 @@ if (liveCanvas) {
     }
   });
 }
+
+
+/* ==========================================================================
+   SHADER MOUSE CURSOR LIGHT MOVER (CERTIFICATES & GALLERY)
+   ========================================================================== */
+
+const shaderBgPage = document.querySelector("body.page-shader-bg");
+if (shaderBgPage) {
+  const updateCursorLight = (e) => {
+    shaderBgPage.style.setProperty("--mx", `${e.clientX}px`);
+    shaderBgPage.style.setProperty("--my", `${e.clientY}px`);
+  };
+  window.addEventListener("pointermove", updateCursorLight, { passive: true });
+}

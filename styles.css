@@ -2734,3 +2734,310 @@ a {
     object-fit: contain;
   }
 }
+
+
+/* ==========================================================================
+   SHADER BACKGROUND & MOUSE CURSOR LIGHT MOVER (CERTIFICATES & GALLERY)
+   ========================================================================== */
+
+body.page-shader-bg {
+  background: #08080c !important;
+  color: #ffffff;
+  position: relative;
+  min-height: 100vh;
+}
+
+/* 1. Shader Background */
+.page-shader-bg .shader-background {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.page-shader-bg .shader-gradient {
+  position: absolute;
+  inset: -30%;
+  background:
+    radial-gradient(circle at 75% 35%, rgba(139, 92, 246, 0.45) 0%, transparent 45%),
+    radial-gradient(circle at 20% 75%, rgba(76, 29, 149, 0.5) 0%, transparent 45%),
+    radial-gradient(circle at 85% 85%, rgba(196, 181, 253, 0.2) 0%, transparent 35%),
+    linear-gradient(135deg, #09090f 0%, #1e0d38 50%, #4c1d95 80%, #09090f 100%);
+  animation: shaderGradientDrift 14s ease-in-out infinite alternate;
+}
+
+@keyframes shaderGradientDrift {
+  0% { transform: scale(1) translate(0, 0); }
+  50% { transform: scale(1.06) translate(-2%, 1.5%); }
+  100% { transform: scale(1.02) translate(1.5%, -1%); }
+}
+
+/* 2. Mouse Cursor Light Mover (Cursor Trail) */
+.page-shader-bg .cursor-trail {
+  position: fixed;
+  width: 450px;
+  height: 450px;
+  left: var(--mx, -500px);
+  top: var(--my, -500px);
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  background: radial-gradient(
+    circle,
+    rgba(196, 181, 253, 0.32) 0%,
+    rgba(139, 92, 246, 0.2) 35%,
+    rgba(76, 29, 149, 0.08) 55%,
+    transparent 72%
+  );
+  filter: blur(28px);
+  pointer-events: none;
+  z-index: 1;
+  will-change: left, top;
+  transition: opacity 0.3s ease;
+}
+
+/* 3. Dark Overlay */
+.page-shader-bg .shader-overlay {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 1;
+  pointer-events: none;
+  background:
+    linear-gradient(
+      90deg,
+      rgba(8, 8, 12, 0.85),
+      rgba(8, 8, 12, 0.25),
+      rgba(8, 8, 12, 0.6)
+    ),
+    linear-gradient(
+      0deg,
+      rgba(8, 8, 12, 0.85),
+      transparent 35%,
+      transparent 70%,
+      rgba(8, 8, 12, 0.5)
+    );
+}
+
+/* Ensure all page content sits above shader & overlay */
+.page-shader-bg .top-utility-bar,
+.page-shader-bg .sub-nav-bar,
+.page-shader-bg main,
+.page-shader-bg .site-footer {
+  position: relative;
+  z-index: 5;
+}
+
+/* Ensure sections are transparent so shader background & light mover show through */
+.page-shader-bg main,
+.page-shader-bg .gallery-section,
+.page-shader-bg .section-shell,
+.page-shader-bg .section-heading,
+.page-shader-bg .gallery-grid {
+  background: transparent !important;
+}
+
+/* Navigation & Heading styling for dark shader background */
+.page-shader-bg .top-utility-bar {
+  background: rgba(8, 8, 12, 0.55);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  backdrop-filter: blur(10px);
+}
+
+.page-shader-bg .top-links a,
+.page-shader-bg .top-socials a {
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.page-shader-bg .top-links a:hover,
+.page-shader-bg .top-socials a:hover {
+  color: #ffffff;
+}
+
+.page-shader-bg .sub-nav-bar {
+  background: rgba(13, 13, 20, 0.7);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(16px);
+}
+
+.page-shader-bg .sub-nav-links a {
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.page-shader-bg .sub-nav-links a:hover {
+  color: #ffffff;
+}
+
+.page-shader-bg .sub-nav-links a.active {
+  color: #c4b5fd;
+  border-bottom-color: #a78bfa;
+}
+
+.page-shader-bg .menu-toggle-sub span {
+  background: #ffffff;
+}
+
+.page-shader-bg .section-number {
+  color: #a78bfa;
+}
+
+.page-shader-bg .section-heading h1 {
+  color: #ffffff;
+}
+
+.page-shader-bg .section-heading h1 em {
+  color: transparent;
+  background: linear-gradient(90deg, #c4b5fd, #8b5cf6, #ddd6fe);
+  -webkit-background-clip: text;
+  background-clip: text;
+  font-style: italic;
+}
+
+.page-shader-bg .section-note {
+  color: rgba(255, 255, 255, 0.65);
+}
+
+/* Dark Glassmorphic Cards */
+.page-shader-bg .gallery-card {
+  background: rgba(18, 18, 28, 0.65);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(12px);
+  box-shadow: 0 12px 35px rgba(0, 0, 0, 0.45);
+  transition: transform 0.35s ease, border-color 0.35s ease, box-shadow 0.35s ease;
+}
+
+.page-shader-bg .gallery-card:hover {
+  transform: translateY(-8px);
+  border-color: rgba(167, 139, 250, 0.45);
+  box-shadow: 0 20px 45px rgba(124, 58, 237, 0.25);
+}
+
+.page-shader-bg .gallery-media {
+  background: rgba(8, 8, 14, 0.8);
+}
+
+.page-shader-bg .gallery-meta {
+  background: rgba(14, 14, 22, 0.85);
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.page-shader-bg .gallery-tag {
+  color: #a78bfa;
+}
+
+.page-shader-bg .gallery-meta h3 {
+  color: #f3f4f6;
+}
+
+/* Photo Album Link Button (on gallery page) */
+.page-shader-bg .photo-album-link {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  color: #ffffff;
+  backdrop-filter: blur(8px);
+  border-radius: 14px;
+}
+
+.page-shader-bg .photo-album-link:hover {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: rgba(167, 139, 250, 0.4);
+}
+
+.page-shader-bg .photo-album-count {
+  background: #7c3aed;
+  color: #ffffff;
+}
+
+.page-shader-bg .photo-album-copy strong {
+  color: #ffffff;
+}
+
+.page-shader-bg .photo-album-copy span {
+  color: rgba(255, 255, 255, 0.65);
+}
+
+/* Dialogs in dark shader theme */
+.page-shader-bg .certificate-dialog,
+.page-shader-bg .photo-album-dialog {
+  background: rgba(13, 13, 22, 0.96);
+  border: 1px solid rgba(167, 139, 250, 0.25);
+  color: #ffffff;
+  box-shadow: 0 24px 80px rgba(0, 0, 0, 0.75), 0 0 40px rgba(124, 58, 237, 0.15);
+  backdrop-filter: blur(20px);
+}
+
+.page-shader-bg .certificate-dialog-image {
+  background: rgba(6, 6, 10, 0.6);
+}
+
+.page-shader-bg .certificate-dialog-copy h2 {
+  color: #ffffff;
+}
+
+.page-shader-bg .certificate-dialog-issuer {
+  color: #c4b5fd;
+}
+
+.page-shader-bg .certificate-dialog-description {
+  color: rgba(255, 255, 255, 0.72);
+}
+
+.page-shader-bg .certificate-dialog-original {
+  color: #a78bfa;
+}
+
+.page-shader-bg .certificate-dialog-close,
+.page-shader-bg .photo-album-close {
+  background: rgba(255, 255, 255, 0.1);
+  color: #ffffff;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+.page-shader-bg .certificate-dialog-close:hover,
+.page-shader-bg .photo-album-close:hover {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+.page-shader-bg .certificate-album {
+  border-top-color: rgba(255, 255, 255, 0.08);
+}
+
+.page-shader-bg .certificate-album-grid a {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.page-shader-bg .photo-album-dialog h2 {
+  color: #ffffff;
+}
+
+.page-shader-bg .photo-album-total {
+  color: #a78bfa;
+}
+
+.page-shader-bg .photo-album-grid a {
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.page-shader-bg .site-footer {
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  color: rgba(255, 255, 255, 0.45);
+}
+
+.page-shader-bg .site-footer a {
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.page-shader-bg .site-footer a:hover {
+  color: #c4b5fd;
+}
+
+@media (max-width: 760px) {
+  .page-shader-bg .sub-nav-links {
+    background: rgba(12, 12, 18, 0.98);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  }
+}
